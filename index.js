@@ -1,6 +1,15 @@
 const puppeteer = require('puppeteer')
 const config = require("./config.json")
 
+/*
+config looks like this:
+{
+	"username": "netid",
+	"password": "password"
+}
+
+*/
+
 const link = "https://dco31.oit.duke.edu/mydukecard/"
 
 const run = async () => {
@@ -19,7 +28,7 @@ const run = async () => {
 		await page.waitForNavigation({waitUntil: "networkidle2"})
 		let box = await page.$("#lbl_FoodBalance")
 		const foodPointValue = await page.evaluate(el => el.innerText, box);
-		console.log("Food points: ", foodPointValue)
+		console.log("Food points:", foodPointValue)
 		browser.close()
 	} catch (e) {
 		console.error(e)

@@ -1,17 +1,6 @@
 const puppeteer = require("puppeteer");
 const moment = require("moment");
 
-const config = require("./config.json");
-
-/*
-config looks like this:
-{
-	"username": "netid",
-	"password": "password"
-}
-
-*/
-
 const link = "https://duke-sp.transactcampus.com/eAccounts/AccountSummary.aspx";
 
 let semesterEnd = moment("2021-12-13");
@@ -102,7 +91,7 @@ let convertToTransactions = (array) => {
   return chunked_arr;
 };
 
-const scrapeBlackboard = async () => {
+const scrapeBlackboard = async (config) => {
   //return 2685.4
   try {
 	console.log("Scraping...");
@@ -147,7 +136,6 @@ const scrapeBlackboard = async () => {
     });
     // table selector: table > tbody > tr > td
     await browser.close();
-	console.log("Finished scraping. Calculating...");
     return [foodPoints, transactionElements];
   } catch (e) {
     console.error(e);
@@ -155,9 +143,9 @@ const scrapeBlackboard = async () => {
   }
 };
 
-calcAvg = async () => {
+calcAvg = async (config) => {
   console.log(`Starting food points calculator for ${config.username}...`);
-  let [moneyLeft, transactionElements] = await scrapeBlackboard();
+  let [moneyLeft, transactionElements] = await scrapeBlackboard(config);
   let today = moment();
 
   // calculate days until end of semester
@@ -220,8 +208,8 @@ calcAvg = async () => {
     fiveDayAvg: Number(fiveDayAvg.toFixed(2)),
   };
 };
-calcAvg().then((results) => {
-  console.log(results);
-});
+// calcAvg().then((results) => {
+//   console.log(results);
+// });
 
 module.exports = calcAvg;

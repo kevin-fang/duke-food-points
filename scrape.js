@@ -94,13 +94,13 @@ let convertToTransactions = (array) => {
 const scrapeBlackboard = async (config) => {
   //return 2685.4
   try {
-	console.log("Scraping...");
+    console.log("Scraping...");
     if (TESTING) {
       return [sampleTotal, sampleTable];
     }
     // launch browser and head to link
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
     });
     const page = await browser.newPage();
 

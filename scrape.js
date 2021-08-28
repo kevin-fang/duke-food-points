@@ -105,6 +105,7 @@ let convertToTransactions = (array) => {
 const scrapeBlackboard = async () => {
   //return 2685.4
   try {
+	console.log("Scraping...");
     if (TESTING) {
       return [sampleTotal, sampleTable];
     }
@@ -146,6 +147,7 @@ const scrapeBlackboard = async () => {
     });
     // table selector: table > tbody > tr > td
     await browser.close();
+	console.log("Finished scraping. Calculating...");
     return [foodPoints, transactionElements];
   } catch (e) {
     console.error(e);
@@ -154,7 +156,7 @@ const scrapeBlackboard = async () => {
 };
 
 calcAvg = async () => {
-  console.log("Running...");
+  console.log(`Starting food points calculator for ${config.username}...`);
   let [moneyLeft, transactionElements] = await scrapeBlackboard();
   let today = moment();
 

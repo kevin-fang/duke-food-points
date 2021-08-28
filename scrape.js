@@ -111,7 +111,7 @@ const scrapeBlackboard = async () => {
     }
     // launch browser and head to link
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
     });
     const page = await browser.newPage();
 
@@ -212,6 +212,7 @@ calcAvg = async () => {
   return {
     transactionsList: transactions,
     transactionsToday: transactionsToday,
+    moneyLeft: moneyLeft,
     spentToday: Number(spentToday.toFixed(2)),
     moneyLeftToday: Number(moneyLeftToday.toFixed(2)),
     daysLeftInSemester: daysLeft,

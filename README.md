@@ -9,6 +9,10 @@
 }
 ```
 
-2. Run `yarn` to install dependencies.
+2. Run `npm i` to install dependencies.
 
-3. Run `yarn start` to print out results.
+3. Run `npm start` to print out results.
+
+Results should look something like this:
+
+![picture](picture.jpg)

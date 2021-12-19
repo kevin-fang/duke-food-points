@@ -3,7 +3,7 @@ const moment = require("moment");
 
 const link = "https://duke-sp.transactcampus.com/eAccounts/AccountSummary.aspx";
 
-let semesterEnd = moment("2021-12-13");
+let semesterEnd = moment("2022-05-08");
 
 let sampleTotal = 2681.13;
 
@@ -100,7 +100,7 @@ const scrapeBlackboard = async (config) => {
     }
     // launch browser and head to link
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
     });
     const page = await browser.newPage();
 

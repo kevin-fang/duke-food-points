@@ -3,74 +3,9 @@ const moment = require("moment");
 
 const link = "https://duke-sp.transactcampus.com/eAccounts/AccountSummary.aspx";
 
-let semesterEnd = moment("2022-05-08");
-
-let sampleTotal = 2681.13;
+let semesterEnd = moment("2022-05-06");
 
 let TESTING = false;
-
-let sampleTable = [
-  "9/3/2019 4:30 PM",
-  "Beyu Blue BYBReg1",
-  "Debit",
-  "(4.30) USD",
-  "9/3/2019 2:57 PM",
-  "McDonalds MCDReg1",
-  "Debit",
-  "(2.68) USD",
-  "9/3/2019 11:53 AM",
-  "Au Bon Pain ABP Reg 4",
-  "Debit",
-  "(4.29) USD",
-  "9/3/2019 11:43 AM",
-  "Chefs Kitchen CKNReg1",
-  "Debit",
-  "(11.83) USD",
-  "9/2/2019 5:36 PM",
-  "Sazon SAZReg1",
-  "Debit",
-  "(12.90) USD",
-  "9/2/2019 4:49 PM",
-  "McDonalds MCDReg1",
-  "Debit",
-  "(1.71) USD",
-  "9/2/2019 1:03 PM",
-  "Loop Loop Reg 3",
-  "Debit",
-  "(9.99) USD",
-  "9/1/2019 8:02 PM",
-  "The Cafe CAFReg2",
-  "Debit",
-  "(7.74) USD",
-  "9/1/2019 4:13 PM",
-  "Perk PERReg1",
-  "Debit",
-  "(10.59) USD",
-  "9/1/2019 1:07 PM",
-  "Sazon SAZReg1",
-  "Debit",
-  "(9.89) USD",
-  "9/1/2019 12:26 AM",
-  "McDonalds MCDReg2",
-  "Debit",
-  "(1.71) USD",
-  "8/31/2019 6:53 PM",
-  "Gyotaku GYOReg1",
-  "Debit",
-  "(3.11) USD",
-  "8/31/2019 6:52 PM",
-  "Gyotaku GYOReg1",
-  "Debit",
-  "(15.00) USD",
-  "8/31/2019 12:48 PM",
-  "Sazon SAZReg1",
-  "Debit",
-  "(0.27) USD",
-  "8/31/2019 12:42 PM",
-  "Sazon SAZReg1",
-  "Debit",
-  "(9.68) USD",
-];
 
 let convertToTransactions = (array) => {
   const chunked_arr = [];
@@ -95,12 +30,9 @@ const scrapeBlackboard = async (config) => {
   //return 2685.4
   try {
     console.log("Scraping...");
-    if (TESTING) {
-      return [sampleTotal, sampleTable];
-    }
     // launch browser and head to link
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
     });
     const page = await browser.newPage();
 
@@ -113,6 +45,7 @@ const scrapeBlackboard = async (config) => {
     }, config);
     await page.click("#Submit");
     await page.waitForNavigation({ waitUntil: "networkidle2" });
+    console.log("Logged in. Waiting for transactions to load...")
 
     // click food panel and wait for load
     await page.click(

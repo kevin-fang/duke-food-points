@@ -1,10 +1,27 @@
-const readlineSync = require("readline-sync");
-const mod_getpass = require("getpass");
+const prompt = require("prompt");
 const scrape = require("./scrape.js");
 
-const username = readlineSync.question("Username:");
-mod_getpass.getPass((_, password) => {
-  scrape({ username, password }).then((results) => {
+prompt.message = "";
+
+const properties = [
+  {
+    name: "netID",
+    validator: /^[a-zA-Z0-9]+$/,
+    warning: "NetID must be only letters and numbers",
+  },
+  {
+    name: "password",
+    hidden: true,
+  }
+];
+
+prompt.start();
+
+prompt.get(properties, (err, res) => {
+  if (err) {
+    console.error(err);
+  }
+  scrape({ username: res.netID, password: res.password }).then((results) => {
     console.log(
       `--------\nMoney left: $${results.moneyLeft}\n
 # of days left in semester: ${results.daysLeftInSemester} days\n
@@ -15,5 +32,4 @@ Current 5-day average spending: $${results.fiveDayAvg}\n`
     );
     process.exit(0);
   });
-
-});
+})
